@@ -13,7 +13,7 @@ from app.modules.habit.controllers.habit_controller import HabitController
 from app.modules.habit.repositories.habit_repository import HabitRepository
 from app.modules.habit.router import build_habit_router
 from app.modules.habit.services.habit_service import HabitService
-
+from app.listeners import register_listeners
 
 async def main() -> None:
     settings = load_settings()
@@ -30,6 +30,7 @@ async def main() -> None:
     dp.include_router(build_habit_router())
 
     try:
+        register_listeners()
         await dp.start_polling(bot)
     finally:
         await bot.session.close()
