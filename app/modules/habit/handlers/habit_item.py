@@ -38,28 +38,39 @@ async def show_habit_list(message: Message, state: FSMContext, habit_controller:
         await message.answer(no_habits())
         return
 
-    buttons = [f'#{habit.id} {habit.emoji} {habit.name}' for habit in habits]
-    await state.update_data(current_habit_ids=[habit.id for habit in habits])
+    buttons = [f'{habit.emoji} {habit.name}' for habit in habits]
+    await state.update_data(habit_map={ f'{habit.emoji} {habit.name}': habit.id for habit in habits})
     await message.answer('Pilih habit yang ingin dibuka.', reply_markup=habit_list_keyboard(buttons))
 
 
-@router.message(F.text.regexp(r'^#\d+\s+'))
-async def open_habit_detail_by_button(message: Message, state: FSMContext, habit_controller: HabitController) -> None:
-    match = HABIT_ID_PATTERN.match(message.text or '')
-    if not match:
-        await message.answer(habit_not_found())
+@router.message()
+async def open_habit_detail_by_button(
+    message: Message,
+    state: FSMContext,
+    habit_controller: HabitController,
+) -> None:
+
+    data = await state.get_data()
+    habit_map = data.get("habit_map", {})
+
+    habit_id = habit_map.get(message.text)
+    if habit_id is None:
         return
 
-    habit_id = int(match.group('id'))
-    habit = await habit_controller.get_habit(habit_id, message.from_user.id)
+    habit = await habit_controller.get_habit(
+        habit_id,
+        message.from_user.id,
+    )
+
     if habit is None:
         await message.answer(habit_not_found())
         return
 
     await state.update_data(active_habit_id=habit.id)
-    await message.answer(habit_detail_text(habit), reply_markup=habit_detail_keyboard())
-
-
+    await message.answer(
+        habit_detail_text(habit),
+        reply_markup=habit_detail_keyboard(),
+    )
 @router.message(F.text == CHECKIN)
 async def habit_checkin(message: Message, state: FSMContext, habit_controller: HabitController) -> None:
     data = await state.get_data()
