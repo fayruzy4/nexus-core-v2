@@ -1,0 +1,7 @@
+ASK_HABIT_NAME = 'Kirim nama habit.'
+ASK_HABIT_EMOJI = 'Kirim emoji habit.'
+ASK_HABIT_CATEGORY = 'Pilih kategori habit.'
+ASK_HABIT_CATEGORY_CUSTOM = 'Ketik kategori baru untuk habit ini.'
+ASK_SCHEDULE_TYPE = 'Pilih jenis jadwal.'
+ASK_CUSTOM_DAYS = 'Pilih hari untuk jadwal kustom. Tekan hari lagi untuk melepas pilihan. Tekan ✅ Selesai jika sudah.'
+ASK_DELETE_CONFIRM = 'Hapus habit ini beserta seluruh riwayatnya?'
