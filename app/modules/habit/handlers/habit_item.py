@@ -92,7 +92,6 @@ async def habit_undo(message: Message, state: FSMContext, habit_controller: Habi
 
     data = await state.get_data()
     logger.info("UNDO STATE=%s", data)
-    logger = logging.getLogger(__name__)
     logger.info("UNDO STATE: %s", data)
     habit_id = data.get('active_habit_id')
     if not habit_id:
