@@ -83,10 +83,15 @@ async def habit_checkin(message: Message, state: FSMContext, habit_controller: H
     await message.answer(habit_detail_text(habit), reply_markup=habit_detail_keyboard())
 
 
-@router.message(F.text == UNDO)
+@router.message()
 async def habit_undo(message: Message, state: FSMContext, habit_controller: HabitController) -> None:
+    logger.info("TEXT=%r", message.text)
+
+    if message.text != UNDO:
+        return
+
     data = await state.get_data()
-    import logging
+    logger.info("UNDO STATE=%s", data)
     logger = logging.getLogger(__name__)
     logger.info("UNDO STATE: %s", data)
     habit_id = data.get('active_habit_id')
