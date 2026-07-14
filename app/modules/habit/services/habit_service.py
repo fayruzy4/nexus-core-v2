@@ -104,7 +104,7 @@ class HabitService:
             return habit, 'already_checked'
 
         await self.repository.insert_checkin(habit_id, today)
-                await self.recalculate_stats(habit_id, owner_telegram_id)
+        await self.recalculate_stats(habit_id, owner_telegram_id)
 
         refreshed = await self.repository.get_habit(
             habit_id,
