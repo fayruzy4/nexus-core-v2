@@ -5,6 +5,9 @@ import re
 from aiogram import F, Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+import logging
+
+logger = logging.getLogger(__name__)
 
 from app.core.constants import NO_BUTTON, YES_BUTTON
 from app.modules.habit.controllers.habit_controller import HabitController
@@ -25,6 +28,9 @@ from app.modules.habit.texts.messages import (
 )
 
 router = Router(name='habit-item')
+@router.message()
+async def debug_all_messages(message: Message) -> None:
+    logger.info("MESSAGE TEXT = %r", message.text)
 HABIT_ID_PATTERN = re.compile(r'^#(?P<id>\d+)\s+')
 
 
