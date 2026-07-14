@@ -136,7 +136,7 @@ class HabitService:
         if removed is None:
             return habit, 'no_today_checkin'
 
-               await self.recalculate_stats(habit_id, owner_telegram_id)
+        await self.recalculate_stats(habit_id, owner_telegram_id)
 
         refreshed = await self.repository.get_habit(
             habit_id,
