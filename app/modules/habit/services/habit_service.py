@@ -40,13 +40,13 @@ class HabitService:
         )
         habit = habit_from_record(record)
         await self.recalculate_stats(habit.id, habit.owner_telegram_id)
-    refreshed = await self.repository.get_habit(
-    habit.id,
-    habit.owner_telegram_id,
-)
-    refreshed_habit = habit_from_record(refreshed)
+        refreshed = await self.repository.get_habit(
+            habit.id,
+            habit.owner_telegram_id,
+        )
+        refreshed_habit = habit_from_record(refreshed)
 
-    await publish(
+        await publish(
             HabitCreatedEvent(
                     owner_telegram_id=refreshed_habit.owner_telegram_id,
                     habit_id=refreshed_habit.id,
@@ -56,8 +56,8 @@ class HabitService:
                     schedule_type=refreshed_habit.schedule_type,
                     scheduled_days=refreshed_habit.scheduled_days,
             )
-    )
-    return refreshed_habit
+        )
+        return refreshed_habit
     async def list_habits(self, owner_telegram_id: int) -> list[HabitDTO]:
         rows = await self.repository.list_habits(owner_telegram_id)
         return [habit_from_record(row) for row in rows]
