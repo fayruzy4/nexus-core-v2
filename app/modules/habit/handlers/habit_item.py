@@ -43,7 +43,7 @@ async def show_habit_list(message: Message, state: FSMContext, habit_controller:
     await message.answer('Pilih habit yang ingin dibuka.', reply_markup=habit_list_keyboard(buttons))
 
 
-@router.message()
+@router.message(F.text.regexp(r"^[^\n]+$"))
 async def open_habit_detail_by_button(
     message: Message,
     state: FSMContext,
@@ -52,6 +52,8 @@ async def open_habit_detail_by_button(
 
     data = await state.get_data()
     habit_map = data.get("habit_map", {})
+    if message.text not in habit_map:
+        return
 
     habit_id = habit_map.get(message.text)
     if habit_id is None:
