@@ -1,0 +1,5 @@
+PROJECT_MAIN_MENU_BUTTON = '📊 Habit Matrix'
+BACK_BUTTON = '⬅️ Kembali'
+CANCEL_BUTTON = '❌ Batal'
+YES_BUTTON = '✅ Ya'
+NO_BUTTON = '❎ Tidak'
