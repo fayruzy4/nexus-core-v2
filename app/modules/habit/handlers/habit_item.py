@@ -28,9 +28,6 @@ from app.modules.habit.texts.messages import (
 )
 
 router = Router(name='habit-item')
-@router.message()
-async def debug_all_messages(message: Message) -> None:
-    logger.info("MESSAGE TEXT = %r", message.text)
 HABIT_ID_PATTERN = re.compile(r'^#(?P<id>\d+)\s+')
 
 
