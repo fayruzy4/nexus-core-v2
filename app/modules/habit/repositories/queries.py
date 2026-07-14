@@ -65,7 +65,19 @@ ORDER BY hc.checkin_date ASC, h.id ASC
 """
 
 LIST_HABITS_WITH_IDS_BY_OWNER = """
-SELECT id, name, emoji, category, schedule_type, scheduled_days, current_streak, longest_streak, total_completion, total_missed, created_at
+SELECT
+    id,
+    owner_telegram_id,
+    name,
+    emoji,
+    category,
+    schedule_type,
+    scheduled_days,
+    current_streak,
+    longest_streak,
+    total_completion,
+    total_missed,
+    created_at
 FROM habits
 WHERE owner_telegram_id = $1
 ORDER BY id ASC
